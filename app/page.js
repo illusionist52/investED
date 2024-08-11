@@ -1,16 +1,9 @@
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
-import Image from "next/image";
+import Navbar from "./components/Navbar";
 
 export default function Home() {
   return (
     <div>
-      hello brother
-      <SignedOut>
-            <SignInButton />
-          </SignedOut>
-          <SignedIn>
-            <UserButton />
-          </SignedIn>
+      <Navbar/>
     </div>
   );
 }
