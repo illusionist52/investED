@@ -13,22 +13,33 @@ import {
   LogOut,
   LogOutIcon,
   MessageCircleMore,
+  ShoppingBagIcon,
   SidebarClose,
 } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 
-function Sidebar() {
+function ParentSideBar() {
   return (
     <div className="h-[100vh] w-[4vw] sticky gap-4 rounded-r-2xl bg-purple-400">
       <div className="flex flex-col items-center justify-around gap-8 py-8">
         <div className="pb-8">
-          <Image
-            src="/images/profileimg.jpg"
-            className="rounded-full"
-            width={30}
-            height={30}
-          />
+          
+          <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+                <Image
+                src="/images/profileimg.jpg"
+                className="rounded-full"
+                width={30}
+                height={30}
+              />
+            </TooltipTrigger>
+            <TooltipContent side="right">
+              <p>Profile</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
         </div>
         <TooltipProvider>
           <Tooltip>
@@ -43,7 +54,11 @@ function Sidebar() {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <BookOpenText size={30} color="white" />
+              <BookOpenText
+                size={30}
+                color="white"
+                onClick={() => router.push("/learning-modules")} 
+              />
             </TooltipTrigger>
             <TooltipContent side="right">
               <p>Learning Modules</p>
@@ -53,20 +68,25 @@ function Sidebar() {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Dices size={30} color="white" />
+              <ShoppingBagIcon size={30} color="white"/>
             </TooltipTrigger>
             <TooltipContent side="right">
-              <p>Investmania</p>
+              <p>Store</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <MessageCircleMore size={30} color="white" />
+                <Image
+                src="/images/childimg.png"
+                className="rounded-full"
+                width={30}
+                height={30}
+              />
             </TooltipTrigger>
             <TooltipContent side="right">
-              <p>Goal Based Recommmendations</p>
+              <p>Bacche ka Profile</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
@@ -87,4 +107,4 @@ function Sidebar() {
   );
 }
 
-export default Sidebar;
+export default ParentSideBar;

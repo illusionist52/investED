@@ -68,7 +68,7 @@ export default function Page() {
   return (
     <div className="my-8 flex flex-col gap-12 overscroll-contain">
       <div className="mx-16 flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Welcome Back! Usmaan </h1>
+        <h1 className="text-3xl font-bold">Welcome Back! Atharva </h1>
         <TransactionDialog />
       </div>
       <div className="grid grid-cols-2 items-start gap-8">
