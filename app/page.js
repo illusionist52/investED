@@ -1,8 +1,13 @@
+import CtaSection from "@/components/CTA";
+import Footer from "@/components/Footer";
+import HeroSection from "@/components/Hero";
 
 export default function Home() {
   return (
     <div className="bg-slate-200">
-<p>heelo</p>
+      <HeroSection />
+      <CtaSection />
+      <Footer />
     </div>
   );
 }
