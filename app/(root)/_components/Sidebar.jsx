@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button";
+import Link from 'next/link';
+
 import {
   Tooltip,
   TooltipContent,
@@ -47,6 +49,7 @@ function Sidebar() {
             </TooltipTrigger>
             <TooltipContent side="right">
               <p>Learning Modules</p>
+              <Link href={`/learning-modules/`}></Link>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
