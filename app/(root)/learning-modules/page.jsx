@@ -1,56 +1,96 @@
+"use client";
+import { useState } from 'react';
 import Link from 'next/link';
 
 const LearningModules = () => {
+  const [selectedLevel, setSelectedLevel] = useState('ALL');
+
   const topics = [
     {
       title: 'Meet the Characters in Your Financial Story',
       description:
         'Understand key figures and roles in your personal financial journey, including yourself, financial advisors, and institutions.',
-      link: '/learning-modules/zero/meet-the-characters',
+      slug: 'meet-the-characters', // Changed from link to slug
+      level: 'ZERO',
+      content: 'Hello this is testing101'
+      // modules: 'meet-the-characters'
     },
     {
       title: 'Why Personal Finance Matters',
       description:
         'Explore the importance of managing your money, making informed decisions, and how it impacts your future.',
-      link: '/learning-modules/why-personal-finance-matters',
+      slug: 'why-personal-finance-matters', // Changed from link to slug
+      level: 'ZERO',
+      content: 'Hello this is testing101'
+      // modules: 'why-personal-finance-matters'
     },
     {
       title: 'Stepping into Financial Adulthood',
       description:
         'Discover the financial responsibilities and opportunities that come with adulthood, including legal and financial independence.',
-      link: '/learning-modules/financial-adulthood',
+      slug: 'financial-adulthood', // Changed from link to slug
+      level: 'ZERO',
+      content: 'Hello this is testing101'
+
+      // modules: 'financial-adulthood'
     },
     {
       title: 'Exploring Various Investment Options',
       description:
         'Dive into the world of investments including mutual funds, stocks, commodities, REITs, and properties to grow your wealth.',
-      link: '/learning-modules/investment-options',
+      slug: 'investment-options', // Changed from link to slug
+      level: 'MEDIUM',
+      content: 'Hello this is testing101'
+      
+      // modules: 'investment-options'
     },
     {
       title: 'Understanding Compounding and Investment Effects',
       description:
         'Gain insights into how compounding and other technical factors can significantly impact your investment returns.',
-      link: '/learning-modules/compounding-investment-effects',
+      slug: 'compounding-investment-effects', // Changed from link to slug
+      level: 'MEDIUM',
+      content: 'Hello this is testing101'
+
+      // modules: 'compounding-investment-effects'
     },
     {
       title: 'Fundamental Analysis',
       description:
         'Learn to assess the intrinsic value of investments by analyzing financial statements, company performance, and economic indicators.',
-      link: '/learning-modules/fundamental-analysis',
+      slug: 'fundamental-analysis', // Changed from link to slug
+      level: 'ADVANCED',
+      content: 'Hello this is testing101'
+
+      // modules: 'fundamental-analysis'
     },
     {
       title: 'Technical Analysis',
       description:
         'Understand how to predict future market movements based on historical price patterns and market data.',
-      link: '/learning-modules/technical-analysis',
+      slug: 'technical-analysis', // Changed from link to slug
+      level: 'ADVANCED',
+      content: 'Hello this is testing101'
+
+      // modules: 'technical-analysis'
     },
     {
       title: 'Assessing Risk Profiles',
       description:
         'Evaluate your risk tolerance and learn how to choose mutual funds that align with your financial goals and risk appetite.',
-      link: '/learning-modules/assessing-risk-profiles',
+      slug: 'assessing-risk-profiles', // Changed from link to slug
+      level: 'ADVANCED',
+      content: 'Hello this is testing101'
+
+      // modules: 'assessing-risk-profiles'
     },
   ];
+
+  // Filter topics based on the selected level
+  const filteredTopics =
+    selectedLevel === 'ALL'
+      ? topics
+      : topics.filter((topic) => topic.level === selectedLevel);
 
   return (
     <div className="min-h-screen bg-gray-50 p-10">
@@ -58,26 +98,64 @@ const LearningModules = () => {
         The Financial Literacy Odyssey
       </h1>
       <p className="text-center text-lg text-gray-700 mb-5">
-        Embark on an odyssey towards financial independence, a journey tailored to guide you through the fundamentals and into the advanced realms of financial knowledge.
+        Embark on an odyssey towards financial independence, a journey tailored
+        to guide you through the fundamentals and into the advanced realms of
+        financial knowledge.
       </p>
       <div className="text-center mb-5">
-        <button className="bg-purple-700 text-white px-4 py-2 rounded-full mx-2">ZERO</button>
-        <button className="bg-gray-200 text-black px-4 py-2 rounded-full mx-2">MEDIUM</button>
-        <button className="bg-gray-200 text-black px-4 py-2 rounded-full mx-2">ADVANCE</button>
+        {/* Buttons to select the levels */}
+        <button
+          className={`px-4 py-2 rounded-full mx-2 ${
+            selectedLevel === 'ALL' ? 'bg-purple-700 text-white' : 'bg-gray-200 text-black'
+          }`}
+          onClick={() => setSelectedLevel('ALL')}
+        >
+          All
+        </button>
+        <button
+          className={`px-4 py-2 rounded-full mx-2 ${
+            selectedLevel === 'ZERO' ? 'bg-purple-700 text-white' : 'bg-gray-200 text-black'
+          }`}
+          onClick={() => setSelectedLevel('ZERO')}
+        >
+          ZERO
+        </button>
+        <button
+          className={`px-4 py-2 rounded-full mx-2 ${
+            selectedLevel === 'MEDIUM' ? 'bg-purple-700 text-white' : 'bg-gray-200 text-black'
+          }`}
+          onClick={() => setSelectedLevel('MEDIUM')}
+        >
+          MEDIUM
+        </button>
+        <button
+          className={`px-4 py-2 rounded-full mx-2 ${
+            selectedLevel === 'ADVANCED' ? 'bg-purple-700 text-white' : 'bg-gray-200 text-black'
+          }`}
+          onClick={() => setSelectedLevel('ADVANCED')}
+        >
+          ADVANCED
+        </button>
       </div>
+
+      {/* Display the filtered topics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {topics.map((topic, index) => (
-          <div
-            key={index}
-            className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
-          >
-            <h2 className="text-xl font-semibold mb-4">{topic.title}</h2>
-            <p className="text-gray-600 mb-4">{topic.description}</p>
-            <Link href={topic.link} className="text-purple-700 font-semibold">
-              Find out more →
-            </Link>
-          </div>
-        ))}
+        {filteredTopics.length > 0 ? (
+          filteredTopics.map((topic, index) => (
+            <div
+              key={index}
+              className="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
+            >
+              <h2 className="text-xl font-semibold mb-4">{topic.title}</h2>
+              <p className="text-gray-600 mb-4">{topic.description}</p>
+              <Link href={`/learning-modules/${topic.slug}`} className="text-purple-700 font-semibold">
+                Find out more →
+              </Link>
+            </div>
+          ))
+        ) : (
+          <p className="text-center col-span-full">No topics available for this level.</p>
+        )}
       </div>
     </div>
   );
