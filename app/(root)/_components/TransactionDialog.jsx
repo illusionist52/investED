@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -20,26 +18,53 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
+import { addTransaction } from "@/api/addTransaction";
+import { Calendar } from "@/components/ui/calendar"; // Ensure this import path is correct
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover"; // Ensure this import path is correct
+import { format } from "date-fns"; // Ensure date-fns is installed
+import { CalendarCheck } from "lucide-react";
 
-export function TransactionDialog() {
+export function TransactionDialog({ onTransactionAdded }) {
   const {
     register,
     handleSubmit,
     setValue,
-    formState: { isSubmitting },
     reset,
+    formState: { isSubmitting },
   } = useForm();
 
-  const [transactionType, setTransactionType] = useState("expense");
+  const [transactionType, setTransactionType] = useState("Expense");
+  const [resetDate, setResetDate] = useState(null); // Add state for the date
+  const [open, setOpen] = useState(false); // State for dialog open/close
 
   const onSubmit = useCallback(
-    (data) => {
-      console.log(`Transaction created: ${transactionType}`, data);
-      reset(); // Reset form after submission
+    async (data) => {
+      const transactionData = {
+        transaction_id: crypto.randomUUID(),
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        amount: parseFloat(data.amount),
+        description: data.description,
+        date: data.date || new Date().toISOString(), // Use selected date or current date
+        user_id: '3490c27c-0c44-4eaa-9a9f-b4be58b80036', // Hardcoded user_id
+        type: transactionType.toLowerCase(),
+        category: data.category,
+        category_icon: 'shopping_cart', // Hardcoded category_icon
+      };
+
+      try {
+        const response = await addTransaction(transactionData);
+        console.log(response);
+        reset(); // Reset form after submission
+        onTransactionAdded(); // Call the function to fetch transactions
+        setOpen(false); // Close the dialog after submission
+      } catch (error) {
+        console.error("Error submitting transaction:", error);
+      }
     },
-    [reset, transactionType]
+    [reset, transactionType, onTransactionAdded]
   );
 
   const handleTabChange = useCallback((value) => {
@@ -47,7 +72,7 @@ export function TransactionDialog() {
   }, []);
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className="bg-purple-400 text-white" variant="outline">
           Add a Transaction
@@ -63,127 +88,134 @@ export function TransactionDialog() {
           className="w-full"
         >
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger
-              value="expense"
-              className={"bg-red-500 text-white"}
-            >
+            <TabsTrigger value="expense" className="bg-purple-400 text-white">
               Expense
             </TabsTrigger>
-            <TabsTrigger
-              value="income"
-              className={"bg-green-500 text-white"}
-            >
+            <TabsTrigger value="income" className="bg-purple-400 text-white">
               Income
             </TabsTrigger>
           </TabsList>
-
-          {/* Expense Tab */}
           <TabsContent value="expense">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Expense</CardTitle>
-                  <CardDescription>
-                    Record your expenses here. Click save when you're done.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  <div className="space-y-1">
+            <Card>
+              <CardHeader>
+                <CardTitle>Expense Details</CardTitle>
+                <CardDescription>Enter your expense details</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid gap-4">
+                  <div>
                     <Label htmlFor="description">Description</Label>
-                    <Input
-                      id="description"
-                      {...register("description", { required: true })}
-                    />
+                    <Input id="description" {...register("description")} />
                   </div>
-                  <div className="space-y-1">
+                  <div>
                     <Label htmlFor="amount">Amount</Label>
                     <Input
                       id="amount"
                       type="number"
-                      {...register("amount", { required: true })}
+                      {...register("amount", { valueAsNumber: true })}
                     />
                   </div>
-                  <div className="space-y-1">
+                  <div>
                     <Label htmlFor="category">Category</Label>
-                    <Input
-                      id="category"
-                      {...register("category", { required: true })}
-                    />
+                    <Input id="category" {...register("category")} />
                   </div>
-                  <div className="space-y-1">
-                    <Label htmlFor="type">Type of Transaction</Label>
-                    <Input
-                      id="type"
-                      value={transactionType === "expense" ? "Expense" : "Income"}
-                      disabled
-                    />
+                  <div>
+                    <Label htmlFor="date">Transaction Date</Label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button variant={"outline"} className="w-full text-left">
+                          {resetDate ? format(resetDate, "PPP") : "Pick a date"}
+                          <CalendarCheck className="ml-auto h-4 w-4 opacity-45" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-2 rounded-lg bg-black">
+                        <div className="bg-white text-black p-4 rounded-lg">
+                          <Calendar
+                            mode="single"
+                            selected={resetDate}
+                            onSelect={(date) => {
+                              setValue("date", date);
+                              setResetDate(date); // Set the selected date
+                            }}
+                            initialFocus
+                          />
+                        </div>
+                      </PopoverContent>
+                    </Popover>
+                    <p className="text-sm text-gray-500">
+                      Select a date for this transaction.
+                    </p>
                   </div>
-                </CardContent>
-                <CardFooter>
-                  <Button type="submit" disabled={isSubmitting}>
-                    {isSubmitting ? "Saving..." : "Save changes"}
-                  </Button>
-                </CardFooter>
-              </Card>
-            </form>
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button className="bg-purple-400" onClick={handleSubmit(onSubmit)} disabled={isSubmitting}>
+                  Add Expense
+                </Button>
+              </CardFooter>
+            </Card>
           </TabsContent>
-
-          {/* Income Tab */}
           <TabsContent value="income">
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Income</CardTitle>
-                  <CardDescription>
-                    Record your income here. Click save when you're done.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-2">
-                  <div className="space-y-1">
+            <Card>
+              <CardHeader>
+                <CardTitle>Income Details</CardTitle>
+                <CardDescription>Enter your income details</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid gap-4">
+                  <div>
                     <Label htmlFor="description">Description</Label>
-                    <Input
-                      id="description"
-                      {...register("description", { required: true })}
-                    />
+                    <Input id="description" {...register("description")} />
                   </div>
-                  <div className="space-y-1">
+                  <div>
                     <Label htmlFor="amount">Amount</Label>
                     <Input
                       id="amount"
                       type="number"
-                      {...register("amount", { required: true })}
+                      {...register("amount", { valueAsNumber: true })}
                     />
                   </div>
-                  <div className="space-y-1">
+                  <div>
                     <Label htmlFor="category">Category</Label>
-                    <Input
-                      id="category"
-                      {...register("category", { required: true })}
-                    />
+                    <Input id="category" {...register("category")} />
                   </div>
-                  {/* <div className="space-y-1">
-                    <Label htmlFor="type">Type of Transaction</Label>
-                    <Input
-                      id="type"
-                      value={transactionType === "expense" ? "Expense" : "Income"}
-                      disabled
-                    />
-                  </div> */}
-                </CardContent>
-                <CardFooter>
-                  <Button type="submit" disabled={isSubmitting}>
-                    {isSubmitting ? "Saving..." : "Save changes"}
-                  </Button>
-                </CardFooter>
-              </Card>
-            </form>
+                  <div>
+                    <Label htmlFor="date">Transaction Date</Label>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button variant={"outline"} className="w-full text-left">
+                          {resetDate ? format(resetDate, "PPP") : "Pick a date"}
+                          <CalendarCheck className="ml-auto h-4 w-4 opacity-45" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-2 rounded-lg bg-black">
+                        <div className="bg-white text-black p-4 rounded-lg">
+                          <Calendar
+                            mode="single"
+                            selected={resetDate}
+                            onSelect={(date) => {
+                              setValue("date", date);
+                              setResetDate(date); // Set the selected date
+                            }}
+                            initialFocus
+                          />
+                        </div>
+                      </PopoverContent>
+                    </Popover>
+                    <p className="text-sm text-gray-500">
+                      Select a date for this transaction.
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button className="bg-purple-400" onClick={handleSubmit(onSubmit)} disabled={isSubmitting}>
+                  Add Income
+                </Button>
+              </CardFooter>
+            </Card>
           </TabsContent>
         </Tabs>
-        <DialogFooter>
-          <Button type="submit" form="transactionForm" disabled={isSubmitting}>
-            {isSubmitting ? "Saving..." : "Save changes"}
-          </Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

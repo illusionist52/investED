@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import BigCard from "../_components/BigCard";
 import BalanceCard from "../_components/BalanceCard";
 import CategoryCard from "../_components/CategoryCard";
@@ -6,110 +8,92 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Table,
   TableBody,
-  TableCaption,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
-  TableFooter,
+  TableCell,
 } from "@/components/ui/table";
-import BarChart from "../_components/ExpenseChart";
 import ExpenseChart from "../_components/ExpenseChart";
 import { Badge } from "@/components/ui/badge";
-import { Dialog } from "@/components/ui/dialog";
 import { TransactionDialog } from "../_components/TransactionDialog";
-
-const transactions = [
-  {
-    invoice: "INV001",
-    paymentStatus: "Paid",
-    totalAmount: "$250.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV002",
-    paymentStatus: "Pending",
-    totalAmount: "$150.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV003",
-    paymentStatus: "Unpaid",
-    totalAmount: "$350.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV004",
-    paymentStatus: "Paid",
-    totalAmount: "$450.00",
-    paymentMethod: "Credit Card",
-  },
-  {
-    invoice: "INV005",
-    paymentStatus: "Paid",
-    totalAmount: "$550.00",
-    paymentMethod: "PayPal",
-  },
-  {
-    invoice: "INV006",
-    paymentStatus: "Pending",
-    totalAmount: "$200.00",
-    paymentMethod: "Bank Transfer",
-  },
-  {
-    invoice: "INV007",
-    paymentStatus: "Unpaid",
-    totalAmount: "$300.00",
-    paymentMethod: "Credit Card",
-  },
-];
+import { getTransactionsByUserId } from "@/api/getTransactions";
 
 export default function Page() {
+  const [transactionss, setTransactions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchTransactions = async () => {
+    try {
+      const data = await getTransactionsByUserId();
+      console.log("Fetched transactions:", data);
+      setTransactions(data);
+    } catch (err) {
+      console.error("Error fetching transactions:", err);
+      setError("Failed to fetch transactions");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTransactions();
+  }, []); // Fetch transactions on mount
+
+  // Fetch transactions whenever a new transaction is added
+  const handleTransactionAdded = () => {
+    fetchTransactions();
+  };
+
+  // Calculate income and expense based on fetched data
+  const income = transactionss
+    .filter((t) => t.type === "income")
+    .reduce((acc, t) => acc + parseFloat(t.amount), 0);
+
+  const expense = transactionss
+    .filter((t) => t.type === "expense")
+    .reduce((acc, t) => acc + parseFloat(t.amount), 0);
+
+  const categories = transactionss.reduce((acc, t) => {
+    const category = acc.find((c) => c.type === t.category);
+    if (category) {
+      category.amount += parseFloat(t.amount);
+    } else {
+      acc.push({
+        type: t.category,
+        amount: parseFloat(t.amount),
+      });
+    }
+    return acc;
+  }, []);
+
   return (
     <div className="my-8 flex flex-col gap-12 overscroll-contain">
       <div className="mx-16 flex items-center justify-between">
         <h1 className="text-3xl font-bold">Welcome Back! Usmaan </h1>
-        <TransactionDialog />
+        <TransactionDialog onTransactionAdded={handleTransactionAdded} />
       </div>
       <div className="grid grid-cols-2 items-start gap-8">
         <div className="flex items-center gap-12">
-          <BigCard data={{ type: "Expense", amount: "1000" }} />
-          <BigCard data={{ type: "Income", amount: "1000" }} />
+          <BigCard data={{ type: "Expense", amount: `${expense}` }} />
+          <BigCard data={{ type: "Income", amount: `${income}` }} />
         </div>
         <div className="row-span-2">
-          <BalanceCard />
+          <BalanceCard transactions={transactionss} />
         </div>
         <div className="row-span-3 grid grid-cols-2 gap-x-2 gap-y-4">
-          <CategoryCard
-            data={{ type: "Rent", amount: "400" }}
-            color={"bg-orange-300"}
-            iconName={"House"}
-          />
-          <CategoryCard
-            data={{ type: "Gas", amount: "300" }}
-            color={"bg-pink-300"}
-            iconName={"Car"}
-          />
-          <CategoryCard
-            data={{ type: "Health", amount: "100" }}
-            color={"bg-green-300"}
-            iconName={"Heart"}
-          />
-          <CategoryCard
-            data={{ type: "Groceries", amount: "60" }}
-            color={"bg-cyan-300"}
-            iconName={"Apple"}
-          />
-          <CategoryCard
-            data={{ type: "Groceries", amount: "60" }}
-            color={"bg-yellow-200"}
-            iconName={"Apple"}
-          />
-          <CategoryCard
-            data={{ type: "Groceries", amount: "60" }}
-            color={"bg-teal-200"}
-            iconName={"Apple"}
-          />
+          {categories.length > 0 ? (
+            categories.map((category, index) => (
+              <CategoryCard
+                key={index}
+                data={{ type: category.type, amount: `${category.amount}` }}
+                color={"bg-teal-200"}
+                iconName={"Apple"}
+              />
+            ))
+          ) : (
+            <div>No categories available</div>
+          )}
         </div>
         <div className="col-span-1 row-span-1 h-[40vh] w-[35vw] rounded-2xl bg-white p-4">
           <h2 className="text-2xl font-bold">Latest Transactions</h2>
@@ -118,23 +102,31 @@ export default function Page() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead className="">Transaaction</TableHead>
-                    <TableHead>Status</TableHead>
+                    <TableHead>Transaction</TableHead>
+                    <TableHead>Type</TableHead>
                     <TableHead className="text-right">Amount</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {transactions.map((invoice) => (
-                    <TableRow key={invoice.invoice}>
-                      <TableCell className="font-medium">
-                        {invoice.invoice}
-                      </TableCell>
-                      <TableCell>{invoice.paymentStatus}</TableCell>
-                      <TableCell className="text-right">
-                        {invoice.totalAmount}
+                  {transactionss.length > 0 ? (
+                    transactionss.map((transaction) => (
+                      <TableRow key={transaction.id}>
+                        <TableCell className="font-medium">
+                          {transaction.description}
+                        </TableCell>
+                        <TableCell>{transaction.type}</TableCell>
+                        <TableCell className="text-right">
+                          {transaction.amount}
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={3} className="text-center">
+                        No transactions available
                       </TableCell>
                     </TableRow>
-                  ))}
+                  )}
                 </TableBody>
               </Table>
             </div>
@@ -161,11 +153,10 @@ export default function Page() {
                 </Badge>
               </div>
             </div>
-            <ExpenseChart />
+            <ExpenseChart transactions={transactionss} />
           </div>
         </div>
       </div>
-      <div></div>
     </div>
   );
 }

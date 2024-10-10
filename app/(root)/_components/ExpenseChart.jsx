@@ -1,77 +1,51 @@
-"use client"
+"use client";
 
-import { ComposedChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Line } from 'recharts';
+import React from "react";
+import {
+  ComposedChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  Line,
+} from "recharts";
 
-const data = [
-  {
-    name: 'Page A',
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: 'Page B',
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: 'Page C',
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: 'Page D',
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: 'Page E',
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: 'Page F',
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: 'Page G',
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-  {
-    name: 'Page H',
-    uv: 4200,
-    pv: 3300,
-    amt: 2400,
-  },
-  {
-    name: 'Page I',
-    uv: 2900,
-    pv: 5100,
-    amt: 2600,
-  },
-  {
-    name: 'Page J',
-    uv: 3700,
-    pv: 3900,
-    amt: 2800,
-  },
-];
+const ExpenseChart = ({ transactions }) => {
+  // Prepare data for the chart based on the transactions
+  const chartData = transactions.reduce((acc, transaction) => {
+    const date = new Date(transaction.date).toLocaleDateString(); // Format the date
 
-function ExpenseChart() {
+    // Check if the date already exists in the accumulator
+    const existingData = acc.find((entry) => entry.name === date);
+
+    if (existingData) {
+      // If the date exists, update the income or expense
+      if (transaction.type === "income") {
+        existingData.income += parseFloat(transaction.amount); // Update income
+      } else {
+        existingData.expense += parseFloat(transaction.amount); // Update expense
+      }
+    } else {
+      // If the date doesn't exist, create a new entry
+      acc.push({
+        name: date,
+        income: transaction.type === "income" ? parseFloat(transaction.amount) : 0,
+        expense: transaction.type === "expense" ? parseFloat(transaction.amount) : 0,
+      });
+    }
+
+    return acc;
+  }, []);
+
   return (
     <ResponsiveContainer width="100%" height={300}>
       <ComposedChart
         width={500}
         height={300}
-        data={data}
+        data={chartData}
         margin={{
           top: 20,
           right: 30,
@@ -85,13 +59,37 @@ function ExpenseChart() {
         <YAxis yAxisId="right" orientation="right" stroke="#82ca9d" />
         <Tooltip />
         <Legend />
-        <Bar yAxisId="left" dataKey="pv" fill="#afaced" radius={[20, 20, 0, 0]} />
-        <Bar yAxisId="right" dataKey="uv" fill="#b9eecd" radius={[20, 20, 0, 0]} />
-        <Line yAxisId="left" type="monotone" dataKey="pv" stroke="#8884d8" strokeWidth={2} />
-        <Line yAxisId="right" type="monotone" dataKey="uv" stroke="#82ca9d" strokeWidth={2} />
+        <Bar
+          yAxisId="left"
+          dataKey="expense"
+          fill="#afaced"
+          radius={[20, 20, 0, 0]}
+          barSize={20} // Set barSize to adjust the width
+        />
+        <Bar
+          yAxisId="right"
+          dataKey="income"
+          fill="#b9eecd"
+          radius={[20, 20, 0, 0]}
+          barSize={20} // Set barSize to adjust the width
+        />
+        <Line
+          yAxisId="left"
+          type="monotone"
+          dataKey="expense"
+          stroke="#8884d8"
+          strokeWidth={2}
+        />
+        <Line
+          yAxisId="right"
+          type="monotone"
+          dataKey="income"
+          stroke="#82ca9d"
+          strokeWidth={2}
+        />
       </ComposedChart>
     </ResponsiveContainer>
-  )
-}
+  );
+};
 
 export default ExpenseChart;
