@@ -1,7 +1,9 @@
 "use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 const Navbar = () => {
+  const router = useRouter()
   const [openNavbar, setOpenNavbar] = useState(false);
   const toggleNavbar = () => {
     setOpenNavbar((openNavbar) => !openNavbar);
@@ -11,8 +13,8 @@ const Navbar = () => {
       <div className="mx-auto h-full w-full items-center px-5 sm:px-10 md:px-12 lg:max-w-7xl lg:px-5">
         <nav className="flex h-full items-center justify-between">
           <div className="flex min-w-max items-center">
-            <Link
-              href="/"
+          <button onClick={()=>{router.push("/expense-tracker")}}
+
               className="flex items-center gap-x-4 text-2xl font-semibold text-gray-700 dark:text-gray-300"
             >
               <div className="flex items-center -space-x-3 font-semibold">
@@ -20,7 +22,7 @@ const Navbar = () => {
                 <span className="flex aspect-square h-6 rounded-full bg-gray-600 dark:bg-white" />
               </div>
               InvestED
-            </Link>
+            </button>
           </div>
           <div
             className={`fixed inset-0 top-0 flex h-[100dvh] flex-col space-y-10 bg-white px-5 py-20 transition-all duration-300 ease-linear dark:bg-gray-950 sm:px-10 md:px-14 lg:relative lg:top-0 lg:h-full lg:w-max lg:flex-1 lg:flex-row lg:items-center lg:justify-between lg:gap-x-10 lg:space-y-0 lg:!bg-transparent lg:px-0 lg:py-0 ${openNavbar ? "visible translate-y-0 opacity-100" : "invisible -translate-y-9 opacity-0 lg:visible lg:translate-y-0 lg:opacity-100"} `}
@@ -108,6 +110,8 @@ const Navbar = () => {
 };
 
 export default function HeroSection() {
+  const router = useRouter()
+
   return (
     <>
       <Navbar />
@@ -139,8 +143,7 @@ export default function HeroSection() {
               accusamus.
             </p>
             <div className="flex justify-center">
-              <Link
-                href="#"
+            <button onClick={()=>{router.push("/expense-tracker")}}
                 className="flex h-12 items-center gap-x-3 rounded-full bg-purple-700 px-8 text-white hover:bg-opacity-80"
               >
                 Ger Started
@@ -158,7 +161,7 @@ export default function HeroSection() {
                     />
                   </svg>
                 </span>
-              </Link>
+              </button>
             </div>
           </div>
         </div>
