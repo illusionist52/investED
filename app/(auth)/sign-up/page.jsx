@@ -19,16 +19,16 @@ const SignUp = () => {
         user_name: data.username,
         full_name: data.fullname,
         parent_email: data.email,
-        virtual_currency: 0, // Initial value
-        modules_completed: 0, // Initial value
-        rank: "Beginner", // Default rank
-        streaks: 0, // Initial streaks
-        goal: "Set your goal!", // Placeholder goal
-        badges_list: "[]", // Initial empty badges
+        virtual_currency: 0,
+        modules_completed: 0, 
+        rank: "Beginner",
+        streaks: 0,
+        goal: "Set your goal!",
+        badges_list: "[]",
 
         // PARENTS DATA
         parent_name: "",
-        store_items_list: "{}"
+        password:""
       };
 
       try {
@@ -76,7 +76,7 @@ const SignUp = () => {
         </div>
       </div>
       {/* <!-- Right Pane --> */}
-      <div className="flex w-full items-center justify-center bg-gray-100 lg:w-1/2">
+      <div className="flex w-full items-center justify-center bg-gradient-to-l from-purple-300 to-purple-100 lg:w-1/2">
         <div className="w-full max-w-md p-6">
           {isOtpVisible ? (
             // OTP Verification Section
@@ -170,7 +170,7 @@ const SignUp = () => {
                 <p>
                   Already have an account?{" "}
                   <Link href="/sign-in" className="text-black hover:underline">
-                    Login here
+                    <span className="font-bold">Login here</span>
                   </Link>
                 </p>
               </div>

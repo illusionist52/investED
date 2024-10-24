@@ -33,7 +33,7 @@ export async function signUpUser(userData) {
       parent_name: userData.parent_name,
       parent_email: userData.parent_email,
       user_id: userId,
-      store_items_list: userData.store_items_list,
+      password: userData.password
     }])
     .select();
 

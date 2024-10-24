@@ -32,7 +32,7 @@ const ModulesList = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="min-h-screen bg-gray-50 p-10">
+    <div className="min-h-screen p-10 bg-[#F3E8FF]">
       <h1 className="text-4xl font-bold text-center text-purple-700 mb-10">
         The Financial Literacy Odyssey
       </h1>
@@ -86,8 +86,8 @@ const ModulesList = () => {
             >
               <h2 className="text-xl font-semibold mb-4">{module.title}</h2>
               <p className="text-gray-600 mb-4">{module.description}</p>
-              <Link href={`/learning-modules/${module.slug}`} className="text-purple-700 font-semibold">
-                Find out more →
+              <Link href={`/learning-modules/${module.slug}`} className="bg-purple-600 text-white/80 rounded-lg drop-shadow-md py-2 px-3 font-semibold">
+                Start learning
               </Link>
             </div>
           ))
