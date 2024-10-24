@@ -30,7 +30,11 @@ function Page() {
   }, []); // Empty dependency array to run only once on mount
 
   if (loading) {
-    return <p>Loading...</p>; // Loading state
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-xl text-gray-600">Loading...</div>
+      </div>
+    );
   }
 
   if (error) {

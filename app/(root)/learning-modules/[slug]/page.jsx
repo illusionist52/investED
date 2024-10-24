@@ -4,6 +4,7 @@ import { getModuleBySlug } from "@/api/getModuleBySlug";
 import { incrementVC } from "@/api/incrementVC";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import ReactMarkdown from 'react-markdown';
 
 const Page = ({ params }) => {

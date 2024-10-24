@@ -28,7 +28,13 @@ const ModulesList = () => {
 
   console.log(modules);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-xl text-gray-600">Loading...</div>
+      </div>
+    );
+  }
   if (error) return <p>Error: {error}</p>;
 
   return (

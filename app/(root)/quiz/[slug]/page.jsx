@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation'; // useSearchParams to get query params
 import { incrementVC } from '@/api/incrementVC';
+import toast from 'react-hot-toast';
 
 const Quiz = ({ params }) => {
   const { slug } = params;
