@@ -19,15 +19,14 @@ const CtaSection = () => {
           </div>
           <div className="relative mx-auto max-w-xl space-y-8 text-center md:max-w-2xl">
             <h1 className="text-3xl/tight font-bold text-purple-950 dark:text-white sm:text-4xl/tight md:text-5xl/tight">
-              Quick Start your{" "}
+              Accelerate Your Path  {" "}
               <span className="bg-gradient-to-br from-purple-600 from-20% via-indigo-400 via-30% to-purple-600 bg-clip-text text-transparent">
-                Strategic Digital
+              to
               </span>{" "}
-              Marketing Campaing
+              Smart Financial Decisions
             </h1>
             <p className="text-gray-700 dark:text-gray-300">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente
-              delectus architecto ullam earum
+            Take Control of Your Financial Future, One Smart Move at a Time!
             </p>
             <div className="mx-auto flex max-w-md justify-center sm:max-w-xl">
               <button className="flex h-12 items-center rounded-xl bg-purple-600 px-5 text-white outline-none">
