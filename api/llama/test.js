@@ -1,15 +1,18 @@
+"use server"
+
 import { ChatGroq } from "@langchain/groq";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
 import mutualFundReturns from "@/public/data/mutualFundsReturns";
 import bankReturns from "@/public/data/bankReturns";
 
 export async function Test() {
+  const key = process.env.GROQ_API_KEY
   const llm = new ChatGroq({
     model: "llama-3.1-70b-versatile",
     temperature: 1,
     maxTokens: undefined,
     maxRetries: 2,
-    apiKey:process.env.GROQ
+    apiKey: key
     // other params...
   });
   // const llmWithResponseFormat = llm.bind({
