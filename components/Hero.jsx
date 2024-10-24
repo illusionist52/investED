@@ -63,7 +63,7 @@ const Navbar = () => {
             </ul>
             <div className="flex w-full sm:w-max lg:min-w-max lg:items-center">
               <Link
-                href="#"
+                href="/sign-up"
                 className="flex items-center justify-center gap-x-3 border-b bg-transparent text-gray-700 hover:border-b-gray-900 hover:text-gray-900 dark:border-purple-300 dark:text-gray-300 dark:hover:border-b-white dark:hover:text-white"
               >
                 Register
