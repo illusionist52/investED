@@ -9,7 +9,7 @@ export async function Test() {
     temperature: 1,
     maxTokens: undefined,
     maxRetries: 2,
-    apiKey:"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"
+    apiKey:process.env.GROQ
     // other params...
   });
   // const llmWithResponseFormat = llm.bind({
