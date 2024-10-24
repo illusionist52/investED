@@ -1,6 +1,8 @@
 "use client"; // This ensures that the component is rendered on the client side
 import getItems from "@/api/getItems";
+import decrementVC from "@/api/decrementVC";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 function Strore() {
   const [items, setItems] = useState([]); // State to hold items data
@@ -30,6 +32,15 @@ function Strore() {
     return <p>Loading items...</p>; // Loading state
   }
 
+  const handleVC = async (price) => {
+    try {
+      const result = await decrementVC(price);
+      toast.success(`${result.message} by ${price} points`)
+    }catch(e){
+      console.log("Error occured", e);
+    }
+  }
+
   return (
     <div className="w-[800px] border h-[55vh]  bg-white flex flex-col gap-4 px-4 py-2 border-slate-300 rounded-2xl">
       <h2 className="text-3xl font-bold">Store</h2>
@@ -50,7 +61,7 @@ function Strore() {
                   {item.price} VC
                 </p>
                 <form className="mt-4">
-                  <button className="block w-full text-white font-bold rounded bg-purple-400 p-2 text-sm transition hover:scale-105">
+                  <button onClick={handleVC(item.price)} className="block w-full text-white font-bold rounded bg-purple-400 p-2 text-sm transition hover:scale-105">
                     Request
                   </button>
                 </form>
