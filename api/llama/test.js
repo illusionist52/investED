@@ -40,7 +40,6 @@ export async function Test(data) {
     risk_tolerance: data.risk_tolerance,
     time:data.period
   },);
-  console.log(res.content)
   return res.content
 }
 

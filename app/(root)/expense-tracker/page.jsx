@@ -25,7 +25,7 @@ export default function Page() {
 
   const fetchTransactions = async () => {
     try {
-      const data = await getTransactionsByUserId
+      const data = await getTransactionsByUserId()
       console.log("Fetched transactions:", data);
       setTransactions(data);
     } catch (err) {

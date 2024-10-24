@@ -2,6 +2,7 @@
 
 import { getModuleBySlug } from "@/api/getModuleBySlug";
 import { useEffect, useState } from "react";
+import ReactMarkdown from 'react-markdown';
 
 const Page = ({ params }) => {
   const { slug } = params;
@@ -56,7 +57,7 @@ const Page = ({ params }) => {
         <h1 className="text-6xl font-bold text-center text-purple-700 mb-4">{title}</h1>
         <h2 className="text-2xl font-semibold text-center text-gray-500 mb-6">Level: {level}</h2>
         <div className="text-gray-600 mb-4">
-          <p className="text-lg">{content}</p>
+          <ReactMarkdown className="text-lg">{content}</ReactMarkdown>
         </div>
       </article>
     </div>
