@@ -17,6 +17,7 @@ import {
 import ExpenseChart from "../_components/ExpenseChart";
 import { Badge } from "@/components/ui/badge";
 import { TransactionDialog } from "../_components/TransactionDialog";
+import AddItemDialog from '../_components/AddItemDialog';
 
 function Dashboard() {
     const [userData, setUserData] = useState(null);
@@ -92,8 +93,10 @@ function Dashboard() {
         <div className="my-8 flex flex-col gap-12 overscroll-contain">
             {/* Header */}
             <div className="mx-16 flex items-center justify-between">
-                <h1 className="text-3xl font-bold">Welcome Back, {userData?.full_name}!</h1>
-            </div>
+        <h1 className="text-3xl font-bold">Welcome Back! Usmaan </h1>
+        <AddItemDialog/>
+        
+      </div>
 
             {/* User Profile Section */}
             <div className="grid grid-cols-2 gap-8">
@@ -131,7 +134,7 @@ function Dashboard() {
             </div>
 
             {/* Transaction Overview Section */}
-            <div className="grid grid-cols-2 items-start gap-8">
+            <div className="grid grid-cols-2 items-start gap-4">
                 {/* <div className="flex items-center gap-12">
                     <BigCard data={{ type: "Expense", amount: `${expense}` }} />
                     <BigCard data={{ type: "Income", amount: `${income}` }} />
