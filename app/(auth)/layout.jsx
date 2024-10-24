@@ -1,9 +1,9 @@
-import Navbar from "../(root)/components/Navbar"
+// import Navbar from "../(root)/components/Navbar"
 
 function layout({children}) {
   return (
     <div>
-      <Navbar/>
+      {/* <Navbar/> */}
       {children}
       </div>
   )
