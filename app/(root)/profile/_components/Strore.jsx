@@ -2,7 +2,7 @@ import React from "react";
 
 function Strore() {
   return (
-    <div className="w-[800px] border h-[55vh] flex flex-col gap-4 px-4 py-2 border-slate-300 rounded-2xl">
+    <div className="w-[800px] border h-[55vh] bg-white flex flex-col gap-4 px-4 py-2 border-slate-300 rounded-2xl">
       <h2 className="text-3xl font-bold">Store</h2>
       <div className="grid gap-4 grid-rows-2 grid-cols-3">
         {/* 1ST CARD */}
