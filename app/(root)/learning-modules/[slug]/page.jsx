@@ -33,7 +33,8 @@ const Page = ({ params }) => {
   }
 
   const handleQuiz = () => {
-    router.push(`quiz/${slug}`);
+    router.push(`/quiz/${slug}`);
+    // window.location.reload = `/quiz/${slug}`;
     setIsComplete(false);
   }
 
