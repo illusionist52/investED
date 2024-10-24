@@ -25,7 +25,7 @@ export default function Page() {
 
   const fetchTransactions = async () => {
     try {
-      const data = await getTransactionsByUserId
+      const data = await getTransactionsByUserId()
       console.log("Fetched transactions:", data);
       setTransactions(data);
     } catch (err) {
@@ -45,9 +45,10 @@ export default function Page() {
     fetchTransactions();
   };
 
+  console.log(transactionss);
+
   // Calculate income and expense based on fetched data
-  const income = transactionss
-    .filter((t) => t.type === "income")
+  const income = transactionss?.filter((t) => t.type === "income")
     .reduce((acc, t) => acc + parseFloat(t.amount), 0);
 
   const expense = transactionss
