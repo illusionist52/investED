@@ -2,25 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const SignUp = () => {
+const SignIn = () => {
   return (
     <div className="flex h-screen">
       {/* <!-- Left Pane --> */}
-      <div className="hidden flex-1 items-center justify-center bg-white text-black lg:flex">
-        <div className="max-w-md text-center">
-          <Image
-            src="/images/auth.svg"
-            width={100}
-            height={100}
-            className="w-full h-full"
-          />
-        </div>
-      </div>
-      {/* <!-- Right Pane --> */}
       <div className="flex w-full items-center justify-center bg-gray-100 lg:w-1/2">
         <div className="w-full max-w-md p-6">
           <h1 className="mb-6 text-center text-3xl font-semibold text-black">
-            Sign Up
+            Sign In
           </h1>
           <h1 className="mb-6 text-center text-sm font-semibold text-gray-500">
             Join to Our Community with all time access and free{" "}
@@ -81,15 +70,26 @@ const SignUp = () => {
           <div className="mt-4 text-center text-sm text-gray-600">
             <p>
               Already have an account?{" "}
-              <Link href="/sign-in" className="text-black hover:underline">
-                Login here
+              <Link href="/sign-up" className="text-black hover:underline">
+                Register here
               </Link>
             </p>
           </div>
+        </div>
+      </div>
+      {/* <!-- Right Pane --> */}
+      <div className="hidden flex-1 items-center justify-center bg-white text-black lg:flex">
+        <div className="max-w-md text-center">
+          <Image
+            src="/images/auth.svg"
+            width={100}
+            height={100}
+            className="w-full h-full"
+          />
         </div>
       </div>
     </div>
   );
 };
 
-export default SignUp;
+export default SignIn;
