@@ -26,6 +26,8 @@ import { Calendar } from "@/components/ui/calendar"; // Ensure this import path 
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover"; // Ensure this import path is correct
 import { format } from "date-fns"; // Ensure date-fns is installed
 import { CalendarCheck } from "lucide-react";
+import { incrementVC } from "@/api/incrementVC";
+import toast from "react-hot-toast";
 
 export function TransactionDialog({ onTransactionAdded }) {
   const {
@@ -61,6 +63,8 @@ export function TransactionDialog({ onTransactionAdded }) {
         reset(); // Reset form after submission
         onTransactionAdded(); // Call the function to fetch transactions
         setOpen(false); // Close the dialog after submission
+        const result = await incrementVC(10);
+        toast.success(`${result.message} by 10 points`)
       } catch (error) {
         console.error("Error submitting transaction:", error);
       }

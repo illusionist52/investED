@@ -1,5 +1,4 @@
 "use client"
-import { Button } from "@/components/ui/button";
 import Link from 'next/link';
 
 import {
@@ -21,8 +20,16 @@ import {
 import Image from "next/image";
 import React from "react";
 import { useRouter } from "next/navigation";
+
 function Sidebar() {
   const router = useRouter();
+
+  const handleLogOut = () => {
+    // 1) Delete everything stored in localstorage.
+    localStorage.clear();
+    router.push("/");
+  }
+
   return (
     <div className="h-[100vh] w-[4vw] sticky gap-4 rounded-r-2xl bg-purple-400">
       <div className="flex flex-col items-center justify-around gap-8 py-8">
@@ -87,7 +94,7 @@ function Sidebar() {
         </TooltipProvider>
         </button>
         
-        <div className="pt-8">
+        <button onClick={handleLogOut} className='hover:cursor-pointer pt-8'>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -98,7 +105,7 @@ function Sidebar() {
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
-        </div>
+        </button>
       </div>
     </div>
   );

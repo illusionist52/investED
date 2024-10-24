@@ -1,6 +1,7 @@
 "use client";
 
 import { getModuleBySlug } from "@/api/getModuleBySlug";
+import { incrementVC } from "@/api/incrementVC";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import ReactMarkdown from 'react-markdown';
@@ -28,8 +29,10 @@ const Page = ({ params }) => {
     fetchSingleModule();
   }, [slug]);
 
-  const handleCompletion = () => {
+  const handleCompletion =  async () => {
     setIsComplete(true);
+    const result = await incrementVC(50);
+    toast.success(`${result.message} by 50 points`)
   }
 
   const handleQuiz = () => {

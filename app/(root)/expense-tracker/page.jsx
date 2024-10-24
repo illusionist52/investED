@@ -17,6 +17,7 @@ import ExpenseChart from "../_components/ExpenseChart";
 import { Badge } from "@/components/ui/badge";
 import { TransactionDialog } from "../_components/TransactionDialog";
 import { getTransactionsByUserId } from "@/api/getTransactions";
+import { incrementVC } from "@/api/incrementVC";
 
 export default function Page() {
   const [transactionss, setTransactions] = useState([]);
@@ -68,10 +69,16 @@ export default function Page() {
     return acc;
   }, []);
 
+  const handleIncrement = async (vCount) => {
+    const userID = localStorage.getItem('userID')
+    const result = await incrementVC(vCount, userID);
+    console.log(result)
+  };
+
   return (
     <div className="my-8 flex flex-col gap-12 overscroll-contain">
-      <div className="mx-16 flex items-center justify-between"> 
-        <h1 className="text-3xl font-bold">Welcome Back! Usmaan </h1>
+      <div className="mx-16 flex items-center justify-between">
+        <h1 className="text-3xl font-bold">Welcome Back! Usmaan</h1>
         <TransactionDialog onTransactionAdded={handleTransactionAdded} />
       </div>
       <div className="grid grid-cols-2 items-start gap-8">
@@ -82,7 +89,7 @@ export default function Page() {
         <div className="row-span-2">
           <BalanceCard transactions={transactionss} />
         </div>
-        <div className="row-span-3 grid grid-cols-2 gap-x-2 gap-y-4">
+        <div className="row-span-3 max-h-[70vh] overflow-y-auto grid grid-cols-2 gap-x-2 gap-y-4">
           {categories.length > 0 ? (
             categories.map((category, index) => (
               <CategoryCard
