@@ -28,7 +28,7 @@ const Navbar = () => {
             className={`fixed inset-0 top-0 flex h-[100dvh] flex-col space-y-10 bg-white px-5 py-20 transition-all duration-300 ease-linear dark:bg-gray-950 sm:px-10 md:px-14 lg:relative lg:top-0 lg:h-full lg:w-max lg:flex-1 lg:flex-row lg:items-center lg:justify-between lg:gap-x-10 lg:space-y-0 lg:!bg-transparent lg:px-0 lg:py-0 ${openNavbar ? "visible translate-y-0 opacity-100" : "invisible -translate-y-9 opacity-0 lg:visible lg:translate-y-0 lg:opacity-100"} `}
           >
             <ul className="flex flex-col gap-y-5 text-gray-700 dark:text-gray-300 lg:h-full lg:flex-1 lg:flex-row lg:items-center lg:justify-center lg:gap-x-5">
-              <li>
+              {/* <li>
                 <Link
                   href="#"
                   className="transition ease-linear hover:text-gray-900 dark:hover:text-white"
@@ -59,7 +59,7 @@ const Navbar = () => {
                 >
                   Company
                 </Link>
-              </li>
+              </li> */}
             </ul>
             <div className="flex w-full sm:w-max lg:min-w-max lg:items-center">
               <Link
@@ -134,19 +134,16 @@ export default function HeroSection() {
               Creativity in mind
             </span>
             <h1 className="max-w-4xl text-4xl font-bold capitalize text-gray-900 dark:text-white md:text-5xl lg:text-6xl/tight xl:text-7xl/tight">
-              Make your finances move
+             Empowering Your Financial Future
             </h1>
             <p className="max-w-xl text-center text-base text-gray-700 dark:text-gray-300">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Similique deleniti earum, qui odio, dolorum labore incidunt ad ab
-              porro, provident excepturi molestiae corporis molestias nam
-              accusamus.
+            Unlock the power of smart investing and financial freedom with our platform. Whether you're just starting out or looking to sharpen your skills, we provide expert guidance, tools, and insights to help you make informed decisions. Join a community of learners and investors, and take control of your financial journey today!
             </p>
             <div className="flex justify-center">
             <button onClick={()=>{router.push("/expense-tracker")}}
                 className="flex h-12 items-center gap-x-3 rounded-full bg-purple-700 px-8 text-white hover:bg-opacity-80"
               >
-                Ger Started
+                Get Started
                 <span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

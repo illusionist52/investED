@@ -6,7 +6,7 @@ const SignIn = () => {
   return (
     <div className="flex h-screen">
       {/* <!-- Left Pane --> */}
-      <div className="flex w-full items-center justify-center bg-gray-100 lg:w-1/2">
+      <div className="flex w-full items-center justify-center bg-gradient-to-r from-purple-300 to-purple-100 lg:w-1/2">
         <div className="w-full max-w-md p-6">
           <h1 className="mb-6 text-center text-3xl font-semibold text-black">
             Sign In
@@ -69,9 +69,9 @@ const SignIn = () => {
           </form>
           <div className="mt-4 text-center text-sm text-gray-600">
             <p>
-              Already have an account?{" "}
+              Don't have an account?{" "}
               <Link href="/sign-up" className="text-black hover:underline">
-                Register here
+                <span className="font-bold">Register here</span>
               </Link>
             </p>
           </div>
