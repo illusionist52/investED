@@ -5,7 +5,7 @@ import { ChatPromptTemplate } from "@langchain/core/prompts";
 import mutualFundReturns from "@/public/data/mutualFundsReturns";
 import bankReturns from "@/public/data/bankReturns";
 
-export async function Test() {
+export async function Test(data) {
   const key = process.env.GROQ_API_KEY
   const llm = new ChatGroq({
     model: "llama-3.1-70b-versatile",
@@ -35,11 +35,12 @@ export async function Test() {
   const res = await chain.invoke({
     mfdata:mutualFundReturns,
     bdata:bankReturns,
-    capital: "100000 rupees",
-    goal_amount: "100000 rupees",
-    risk_tolerance: "Medium",
-    time:"5 years"
+    capital: data.capital,
+    goal_amount: data.goal_amount,
+    risk_tolerance: data.risk_tolerance,
+    time:data.period
   },);
   console.log(res.content)
+  return res.content
 }
 
