@@ -78,16 +78,14 @@ const SignUp = () => {
       {/* <!-- Right Pane --> */}
       <div className="flex w-full items-center justify-center bg-gray-100 lg:w-1/2">
         <div className="w-full max-w-md p-6">
-          
-          
-          {isOtpVisible ? (
+          {!isOtpVisible ? (
             // OTP Verification Section
             <>
-              <h1 className="mb-6 text-center text-3xl font-semibold text-black">
-                Sign Up
+              <h1 className="mb-2 text-center text-3xl font-semibold text-black">
+                Verify your OTP
               </h1>
               <h1 className="mb-6 text-center text-sm font-semibold text-gray-500">
-                Join Our Community with all-time access and free
+                One-step away from getting financial knowledge
               </h1>
               <form onSubmit={handleOtpSubmit} className="space-y-4">
                 <div>
@@ -114,61 +112,69 @@ const SignUp = () => {
                   </button>
                 </div>
               </form>
-              <div className="mt-4 text-center text-sm text-gray-600">
-              <p>
-                Already have an account?{" "}
-                <Link href="/sign-in" className="text-black hover:underline">
-                  Login here
-                </Link>
-              </p>
-            </div>
             </>
           ) : (
             // Sign Up Form
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-              <div>
-                <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-                  Username
-                </label>
-                <input
-                  type="text"
-                  id="username"
-                  {...register("username", { required: true })}
-                  className="mt-1 w-full rounded-md border p-2 transition-colors duration-300 focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
-                />
+            <>
+              <h1 className="mb-6 text-center text-3xl font-semibold text-black">
+                Sign Up
+              </h1>
+              <h1 className="mb-6 text-center text-sm font-semibold text-gray-500">
+                Join Our Community with all-time access and free
+              </h1>
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                <div>
+                  <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+                    Username
+                  </label>
+                  <input
+                    type="text"
+                    id="username"
+                    {...register("username", { required: true })}
+                    className="mt-1 w-full rounded-md border p-2 transition-colors duration-300 focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="fullname" className="block text-sm font-medium text-gray-700">
+                    Full Name
+                  </label>
+                  <input
+                    type="text"
+                    id="fullname"
+                    {...register("fullname", { required: true })}
+                    className="mt-1 w-full rounded-md border p-2 transition-colors duration-300 focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                    Parent Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    {...register("email", { required: true })}
+                    className="mt-1 w-full rounded-md border p-2 transition-colors duration-300 focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
+                  />
+                </div>
+                <div>
+                  <button
+                    type="submit"
+                    className={`w-full rounded-md bg-black p-2 text-white transition-colors duration-300 hover:bg-gray-800 focus:bg-black focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 ${isSubmitting ? 'opacity-50' : ''}`}
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? 'Signing Up...' : 'Sign Up'}
+                  </button>
+                </div>
+              </form>
+              <div className="mt-4 text-center text-sm text-gray-600">
+                <p>
+                  Already have an account?{" "}
+                  <Link href="/sign-in" className="text-black hover:underline">
+                    Login here
+                  </Link>
+                </p>
               </div>
-              <div>
-                <label htmlFor="fullname" className="block text-sm font-medium text-gray-700">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  id="fullname"
-                  {...register("fullname", { required: true })}
-                  className="mt-1 w-full rounded-md border p-2 transition-colors duration-300 focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
-                />
-              </div>
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                  Parent Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  {...register("email", { required: true })}
-                  className="mt-1 w-full rounded-md border p-2 transition-colors duration-300 focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2"
-                />
-              </div>
-              <div>
-                <button
-                  type="submit"
-                  className={`w-full rounded-md bg-black p-2 text-white transition-colors duration-300 hover:bg-gray-800 focus:bg-black focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 ${isSubmitting ? 'opacity-50' : ''}`}
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? 'Signing Up...' : 'Sign Up'}
-                </button>
-              </div>
-            </form>
+            </>
           )}
         </div>
       </div>

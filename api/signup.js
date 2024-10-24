@@ -41,7 +41,6 @@ export async function signUpUser(userData) {
 
   // Step 3: Send OTP via email
   const childOTP = await otp;
-  console.log("PROMISE OTP - ", childOTP);
   await sendOTPEmail(userData.parent_email, childOTP, userData.full_name, userData.user_name);
 
   // Step 4: Store OTP in localStorage with expiration time
