@@ -1,22 +1,24 @@
 import { supabase } from "@/supabase";
+import bcrypt from 'bcryptjs';
 
-// export async function updateParentDetails(parentEmail, parentName, userId) {
-export async function updateParentDetails(parentEmail, parentName) {
+export async function updateParentDetails(parentEmail, parentName, password) {
     try {
-      const { data, error } = await supabase
-        .from('Parent')
-        .update({
-          parent_name: parentName
-        })
-        .eq('parent_email', parentEmail)
-        // .eq('user_id', userId); // Ensure the update is linked to the correct user
-  
-      if (error) throw error;
-  
-      return { success: true, message: 'Parent details updated successfully.' };
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        const { data, error } = await supabase
+            .from('Parent')
+            .update({
+                parent_name: parentName,
+                password: hashedPassword
+            })
+            .eq('parent_email', parentEmail);
+
+        if (error) throw error;
+
+        return { success: true, message: 'Parent details updated successfully.' };
     } catch (e) {
-      console.error('Error updating parent details:', e);
-      return { success: false, message: 'Failed to update parent details.' };
+        console.error('Error updating parent details:', e);
+        return { success: false, message: 'Failed to update parent details.' };
     }
-  }
-  
+}

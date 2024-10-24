@@ -74,8 +74,8 @@ function Sidebar() {
           </Tooltip>
         </TooltipProvider>
         </button>
-        <button>
-        <TooltipProvider>
+        <button onClick={()=>{router.push("/recommendations")}}>       
+         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
               <MessageCircleMore size={30} color="white" />

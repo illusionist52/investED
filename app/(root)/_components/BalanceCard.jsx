@@ -47,7 +47,7 @@ const BalanceCard = ({ transactions }) => {
       <div className="flex flex-col gap-1 items-start">
         <h1 className="text-3xl font-semibold">Total Balance</h1>
         <p className="text-lg font-semibold">
-          Balance: <span className="text-xl">${totalBalance.toFixed(2)}</span>
+          Balance: <span className="text-xl">₹{totalBalance.toFixed(2)}</span>
         </p>
       </div>
 

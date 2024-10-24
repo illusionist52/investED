@@ -19,16 +19,16 @@ const SignUp = () => {
         user_name: data.username,
         full_name: data.fullname,
         parent_email: data.email,
-        virtual_currency: 0, // Initial value
-        modules_completed: 0, // Initial value
-        rank: "Beginner", // Default rank
-        streaks: 0, // Initial streaks
-        goal: "Set your goal!", // Placeholder goal
-        badges_list: "[]", // Initial empty badges
+        virtual_currency: 0,
+        modules_completed: 0, 
+        rank: "Beginner",
+        streaks: 0,
+        goal: "Set your goal!",
+        badges_list: "[]",
 
         // PARENTS DATA
         parent_name: "",
-        store_items_list: "{}"
+        password:""
       };
 
       try {
