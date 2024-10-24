@@ -32,7 +32,7 @@ const ModulesList = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="min-h-screen bg-gray-50 p-10">
+    <div className="min-h-screen p-10 bg-[#F3E8FF]">
       <h1 className="text-4xl font-bold text-center text-purple-700 mb-10">
         The Financial Literacy Odyssey
       </h1>
