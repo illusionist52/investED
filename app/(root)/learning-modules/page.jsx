@@ -86,8 +86,8 @@ const ModulesList = () => {
             >
               <h2 className="text-xl font-semibold mb-4">{module.title}</h2>
               <p className="text-gray-600 mb-4">{module.description}</p>
-              <Link href={`/learning-modules/${module.slug}`} className="text-purple-700 font-semibold">
-                Find out more →
+              <Link href={`/learning-modules/${module.slug}`} className="bg-purple-600 text-white/80 rounded-lg drop-shadow-md py-2 px-3 font-semibold">
+                Start learning
               </Link>
             </div>
           ))

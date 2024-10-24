@@ -1,14 +1,17 @@
 "use client";
 
 import { getModuleBySlug } from "@/api/getModuleBySlug";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import ReactMarkdown from 'react-markdown';
 
 const Page = ({ params }) => {
   const { slug } = params;
+  const router = useRouter()
   const [modContent, setModContent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
     const fetchSingleModule = async () => {
@@ -24,6 +27,15 @@ const Page = ({ params }) => {
 
     fetchSingleModule();
   }, [slug]);
+
+  const handleCompletion = () => {
+    setIsComplete(true);
+  }
+
+  const handleQuiz = () => {
+    router.push(`quiz/${slug}`);
+    setIsComplete(false);
+  }
 
   if (loading) {
     return (
@@ -52,12 +64,26 @@ const Page = ({ params }) => {
   const { title, level, content } = modContent;
 
   return (
-    <div className="min-h-screen bg-gray-50 p-10">
+    <div className={`min-h-screen bg-gray-50 p-10`}>
       <article className="mx-auto bg-white p-8 rounded-lg shadow-md">
         <h1 className="text-6xl font-bold text-center text-purple-700 mb-4">{title}</h1>
         <h2 className="text-2xl font-semibold text-center text-gray-500 mb-6">Level: {level}</h2>
         <div className="text-gray-600 mb-4">
           <ReactMarkdown className="text-lg">{content}</ReactMarkdown>
+        </div>
+
+        <div className="flex justify-center items-center">
+          {!isComplete ? 
+          (
+            <button onClick={handleCompletion} className="text-xl text-white/90 font-medium py-1 px-4 bg-purple-500 rounded-lg hover:shadow-xl">
+              Complete Module
+            </button>
+          ) : 
+          (
+            <button onClick={handleQuiz} className="text-xl text-white/90 font-medium py-1 px-4 bg-green-500 rounded-lg hover:shadow-xl">
+              Take a quiz
+            </button>
+          )}
         </div>
       </article>
     </div>
