@@ -9,7 +9,7 @@ import ReactMarkdown from 'react-markdown';
 
 function Page() {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const [recommendations, setRecommendations] = useState('');
+  const [recommendations, setRecommendations] = useState(' ');
   const [displayText, setDisplayText] = useState(''); // State for the typing animation
 
   useEffect(() => {
@@ -31,7 +31,7 @@ function Page() {
     console.log(data);
     const recom = await Test(data);
     console.log(recom);
-    setRecommendations(recom); // Assuming 'recom' is a markdown string
+    setRecommendations("  "+ recom); // Assuming 'recom' is a markdown string
   };
 
   return (
