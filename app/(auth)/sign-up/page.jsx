@@ -78,7 +78,7 @@ const SignUp = () => {
       {/* <!-- Right Pane --> */}
       <div className="flex w-full items-center justify-center bg-gray-100 lg:w-1/2">
         <div className="w-full max-w-md p-6">
-          {!isOtpVisible ? (
+          {isOtpVisible ? (
             // OTP Verification Section
             <>
               <h1 className="mb-2 text-center text-3xl font-semibold text-black">

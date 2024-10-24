@@ -1,4 +1,3 @@
-// lib/supabaseModule.js
 import { supabase } from "@/supabase";
 
 export async function getAllModules() {
@@ -7,7 +6,6 @@ export async function getAllModules() {
     let { data: LearningModules, error } = await supabase
     .from('LearningModules')
     .select('*')
-        
 
     if (error) {
       console.error(`Error fetching modules: ${error.message}`);

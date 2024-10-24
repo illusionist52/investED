@@ -6,9 +6,10 @@ import HeroSection from "@/components/Hero";
 import { useEffect } from "react";
 
 export default function Home() {
-  useEffect(() => {
-    Test(); // Automatically runs when component mounts
-  }, []);  
+  // useEffect(() => {
+  //   Test(); // Automatically runs when component mounts
+  // }, []);
+    
   return (
     <div className="bg-slate-200">
       <HeroSection />
