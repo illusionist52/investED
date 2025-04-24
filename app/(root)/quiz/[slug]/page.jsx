@@ -1,16 +1,27 @@
 "use client";
-import { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation'; // useSearchParams to get query params
+import { useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { incrementVC } from '@/api/incrementVC';
-import toast from 'react-hot-toast';
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogFooter,
+  AlertDialogTitle,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
 
 const Quiz = ({ params }) => {
   const { slug } = params;
   const router = useRouter();
-  const searchParams = useSearchParams(); // Get the query params
+  const searchParams = useSearchParams();
   const [score, setScore] = useState(0);
+  const [points, setPoints] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showScore, setShowScore] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   // Static quiz questions categorized by slug
   const questions = {
@@ -113,7 +124,7 @@ const Quiz = ({ params }) => {
         ]
       }
     ],
-    'hyperinflation': [
+    'inflation': [
       {
         questionText: 'What is hyperinflation?',
         options: [
@@ -182,9 +193,9 @@ const Quiz = ({ params }) => {
 
   const handleAnswerOptionClick = async (isCorrect) => {
     if (isCorrect) {
-      setScore(score + 1);
-      const result = await incrementVC(10);
-      toast.success(`${result.message} by 10 points`)
+      setScore(prev => prev + 1);
+      setPoints(prev => prev + 10);
+      await incrementVC(10);
     }
 
     const nextQuestion = currentQuestion + 1;
@@ -195,45 +206,76 @@ const Quiz = ({ params }) => {
     }
   };
 
+  const handleConfirmBack = () => {
+    setPoints(0);
+    router.push('/learning-modules');
+  };
+
   if (!questions[slug]) {
-    return <div>Loading...</div>; // Display loading until questions are available for the slug
+    return <div>Loading...</div>;
   }
 
   return (
-    <div className="flex flex-col items-center mt-10">
-      <h2 className="text-2xl font-semibold mb-6">
+    <div className="flex flex-col items-center mt-12 px-4">
+      <h2 className="text-3xl font-semibold mb-6 text-gray-800 tracking-wide">
         {slug.replace('-', ' ').toUpperCase()}
       </h2>
+
+      {!showScore && (
+        <div className="mb-6 text-lg font-medium text-purple-600 bg-purple-50 px-5 py-2 rounded-xl shadow-sm">
+          Points: {points}
+        </div>
+      )}
+
       {showScore ? (
-        <div className="bg-green-100 text-green-700 p-4 rounded-md">
-          You scored {score} out of {questions[slug]?.length}
+        <div className="bg-white px-6 py-6 rounded-2xl shadow-lg w-full max-w-lg">
+          <h3 className="text-2xl font-semibold text-gray-800 mb-4">Quiz Summary</h3>
+          <div className="space-y-3">
+            <p className="text-lg text-gray-700">Total Questions: <span className="font-semibold">{questions[slug]?.length}</span></p>
+            <p className="text-lg text-gray-700">Correct Answers: <span className="font-semibold text-green-600">{score}</span></p>
+            <p className="text-lg text-gray-700">Incorrect Answers: <span className="font-semibold text-red-500">{questions[slug]?.length - score}</span></p>
+            <p className="text-lg text-gray-700">Total Points Earned: <span className="font-bold text-blue-600">{points}</span></p>
+          </div>
         </div>
       ) : (
-        <>
-          <div className="bg-white p-6 shadow-md rounded-md w-96 mb-4">
-            <div className="text-lg mb-4">
-              {questions[slug]?.[currentQuestion]?.questionText || 'No questions available'}
-            </div>
-            <div className="flex flex-col gap-3">
-              {questions[slug]?.[currentQuestion]?.options.map((option, index) => (
-                <button
-                  key={index}
-                  onClick={() => handleAnswerOptionClick(option.isCorrect)}
-                  className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-                >
-                  {option.answerText}
-                </button>
-              ))}
-            </div>
+        <div className="bg-white w-full max-w-2xl p-8 rounded-3xl shadow-lg transition-all">
+          <div className="text-2xl font-medium text-gray-900 mb-6 leading-relaxed">
+            {questions[slug]?.[currentQuestion]?.questionText || 'No questions available'}
           </div>
-        </>
+          <div className="flex flex-col gap-5">
+            {questions[slug]?.[currentQuestion]?.options.map((option, index) => (
+              <button
+                key={index}
+                onClick={() => handleAnswerOptionClick(option.isCorrect)}
+                className="border border-gray-300 hover:border-purple-600 hover:bg-purple-50 transition duration-200 text-gray-800 py-3 px-5 rounded-xl text-left font-medium"
+              >
+                {option.answerText}
+              </button>
+            ))}
+          </div>
+        </div>
       )}
-      <button
-        onClick={() => router.push('/learning-modules')}
-        className="text-blue-500 underline mt-4"
+
+      {!showScore  && <Button
+        variant="ghost"
+        className="mt-6 text-purple-600 hover:underline"
+        onClick={() => setShowAlert(true)}
       >
         Go back
-      </button>
+      </Button>}
+
+      <AlertDialog open={showAlert} onOpenChange={setShowAlert}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure you want to go back?</AlertDialogTitle>
+            <p className="text-sm text-gray-500">Your current progress and points will be lost.</p>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleConfirmBack}>Confirm</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
