@@ -1,6 +1,6 @@
 "use client";
 import { useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { incrementVC } from '@/api/incrementVC';
 import {
   AlertDialog,
@@ -15,8 +15,8 @@ import { Button } from '@/components/ui/button';
 
 const Quiz = ({ params }) => {
   const { slug } = params;
+  console.log("Slug - ", slug)
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [score, setScore] = useState(0);
   const [points, setPoints] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -124,7 +124,7 @@ const Quiz = ({ params }) => {
         ]
       }
     ],
-    'inflation': [
+    'hyperinflation': [
     {
       questionText: 'What is inflation?',
       options: [
