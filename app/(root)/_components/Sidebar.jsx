@@ -36,7 +36,7 @@ function Sidebar() {
         <div className="pb-8">
         <button onClick={()=>{router.push("/profile")}}>
           <Image
-            src="/images/profileimg.jpg"
+            src="https://hjvxplpovfazqqegginc.supabase.co/storage/v1/object/public/store-items/photo.jpg"
             className="rounded-full"
             width={30}
             height={30}
