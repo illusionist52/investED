@@ -2,7 +2,7 @@ import React from "react";
 
 const ProgressBar = () => {
   return (
-    <div className="mt-14 flex justify-center items-center">
+    <div className="mb-10 flex justify-center items-center">
       <div className="container text-center mx-auto w-[800px]">
         <div className="bg-black bg-opacity-10 p-1.5 rounded-lg shadow-inner">
           <div

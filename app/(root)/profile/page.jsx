@@ -54,6 +54,7 @@ function Page() {
         <Banner user={user} />
       </div>
       <ProgressBar />
+
       <div className="flex gap-x-16 px-10">
         <div className="flex flex-col gap-x-4 gap-y-8">
           <Goal goal={user?.goal ?? "N/A"} /> {/* Provide default value if user is null */}
@@ -61,7 +62,7 @@ function Page() {
         </div>
         <Strore />
       </div>
-      <div className="flex gap-x-16 -mt-8 px-10">
+      <div className="flex gap-x-16 px-10">
         <Badges />
         <History />
       </div>

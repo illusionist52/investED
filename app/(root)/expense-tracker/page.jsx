@@ -76,8 +76,8 @@ export default function Page() {
   };
 
   return (
-    <div className="my-8 flex flex-col gap-12 overscroll-contain">
-      <div className="mx-16 flex items-center justify-between">
+    <div className="my-8 flex flex-col gap-12">
+      <div className="mx-16 flex items-cente justify-between">
         <h1 className="text-3xl font-bold">Welcome Back! Usmaan</h1>
         <TransactionDialog onTransactionAdded={handleTransactionAdded} />
       </div>
@@ -103,9 +103,9 @@ export default function Page() {
             <div>No categories available</div>
           )}
         </div>
-        <div className="col-span-1 row-span-1 h-[40vh] w-[35vw] rounded-2xl bg-white p-4">
+        <div className="col-span-1 row-span-1 h-[50vh] w-[35vw] rounded-2xl bg-white p-4">
           <h2 className="text-2xl font-bold">Latest Transactions</h2>
-          <ScrollArea className="h-[30vh]">
+          <ScrollArea className="h-[40vh]">
             <div className="flex flex-col gap-2">
               <Table>
                 <TableHeader>
@@ -140,10 +140,11 @@ export default function Page() {
             </div>
           </ScrollArea>
         </div>
+
         <div className="col-span-2 row-span-2 h-[50vh] w-[90%] rounded-3xl bg-white p-4">
           <div className="flex flex-col items-start gap-2">
-            <div className="flex items-center justify-between gap-40">
-              <h3 className="text-xl font-semibold">Overview</h3>
+            <div className="flex items-center justify-between w-full gap-40">
+              <h3 className="text-4xl font-semibold">Overview</h3>
               <div className="flex h-10 gap-2">
                 <Badge
                   variant={"outline"}
