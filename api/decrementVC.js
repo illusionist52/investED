@@ -1,6 +1,6 @@
 import { supabase } from "@/supabase";
 
-export async function incrementVC(VCvalue, userID = '3490c27c-0c44-4eaa-9a9f-b4be58b80036') {
+export default async function decrementVC(VCvalue, userID = '3490c27c-0c44-4eaa-9a9f-b4be58b80036') {
     try {
         console.log(userID)
         // Fetch the current virtual currency value

@@ -61,27 +61,15 @@ const Navbar = () => {
                 </Link>
               </li> */}
             </ul>
-            <div className="flex w-full sm:w-max lg:min-w-max lg:items-center">
+            <div className="flex gap-6 w-full sm:w-max lg:min-w-max lg:items-center">
               <Link
                 href="/sign-up"
                 className="flex items-center justify-center gap-x-3 border-b bg-transparent text-gray-700 hover:border-b-gray-900 hover:text-gray-900 dark:border-purple-300 dark:text-gray-300 dark:hover:border-b-white dark:hover:text-white"
               >
                 Register
-                <span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                    className="h-5 w-5"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5 10a.75.75 0 01.75-.75h6.638L10.23 7.29a.75.75 0 111.04-1.08l3.5 3.25a.75.75 0 010 1.08l-3.5 3.25a.75.75 0 11-1.04-1.08l2.158-1.96H5.75A.75.75 0 015 10z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </span>
+          
               </Link>
+              <Link className="text-slate-600" href={"parent-portal"}>Parent</Link>
             </div>
           </div>
           <div className="z-60 relative flex items-center justify-end lg:hidden">

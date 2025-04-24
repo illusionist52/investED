@@ -35,7 +35,7 @@ function Strore() {
   const handleVC = async (price) => {
     try {
       const result = await decrementVC(price);
-      toast.success(`${result.message} by ${price} points`)
+      // toast.success(`${result.message} by ${price} points`)
     }catch(e){
       console.log("Error occured", e);
     }
