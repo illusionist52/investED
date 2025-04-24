@@ -124,7 +124,7 @@ const Quiz = ({ params }) => {
         ]
       }
     ],
-    'hyperinflation': [
+    'inflation': [
     {
       questionText: 'What is inflation?',
       options: [
